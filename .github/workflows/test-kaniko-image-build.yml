@@ -1,6 +1,6 @@
 name: Build Squid image with Kaniko
 
-# Controls when the action will run. For testing, this workflow will only run whenmanually triggered
+# Controls when the action will run. For testing, this workflow will only run when manually triggered
 on: workflow_dispatch
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -15,11 +15,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Get Docker metadata for later steps
       - uses: docker/metadata-action@v3
         id: metadata
         with:
-          images: ghcr.io/${{ github.repository }}-kaniko
+          images: ghcr.io/${{ github.repository }}
 
+      # Default login to GH container registry
       - uses: docker/login-action@v1
         with:
           registry: ghcr.io
@@ -33,7 +35,7 @@ jobs:
           context: docker-squid
           cache: true
           # for testing purposes
-          debugMode: true
+          debug_mode: true
           push: false
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
