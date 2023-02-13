@@ -33,7 +33,8 @@ jobs:
         uses: bymarshall/kaniko-action@main
         with:
           context: docker-squid
-          cache: true
+          # disabled until actually pushing
+          # cache: true
           # for testing purposes
           debug_mode: true
           push: false
